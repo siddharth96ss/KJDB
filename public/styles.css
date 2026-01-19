@@ -223,8 +223,8 @@ body {
     border-radius: var(--border-radius);
     box-shadow: var(--shadow-md);
     width: 100%;
-    max-width: min(90vw, 90vh, 500px);
-    aspect-ratio: 1;
+    max-width: min(90vw, 500px);
+    /* aspect-ratio set dynamically via JS based on image */
 }
 
 /* ========================================

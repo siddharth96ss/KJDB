@@ -81,12 +81,13 @@
 
     /**
      * Calculate grid size based on level index
-     * level_1 = 3x3, level_2 = 4x4, level_3+ increases gradually
+     * Keeps difficulty low: 3x3 for all levels, max 4x4
      */
     function calculateGridSize(levelIndex) {
         const baseSize = 3;
-        const maxSize = 6;
-        return Math.min(baseSize + levelIndex, maxSize);
+        const maxSize = 4;
+        // Increase only every 2 levels
+        return Math.min(baseSize + Math.floor(levelIndex / 2), maxSize);
     }
 
     /**
@@ -224,6 +225,10 @@
         container.innerHTML = '';
         container.style.gridTemplateColumns = `repeat(${state.gridSize}, 1fr)`;
         container.classList.remove('locked');
+
+        // Set aspect ratio based on original image proportions
+        const aspectRatio = state.originalImage.width / state.originalImage.height;
+        container.style.aspectRatio = aspectRatio;
 
         state.tiles.forEach((tile, currentIndex) => {
             const tileElement = document.createElement('div');
