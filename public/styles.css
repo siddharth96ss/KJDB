@@ -1,0 +1,439 @@
+/**
+ * Tile-Swap Puzzle Game Styles
+ *
+ * Mobile-first, clean, minimal design
+ * Uses CSS custom properties for easy theming
+ */
+
+/* ========================================
+   CSS Custom Properties
+   ======================================== */
+:root {
+    /* Colors */
+    --color-bg: #f8f9fa;
+    --color-surface: #ffffff;
+    --color-text: #2d3436;
+    --color-text-muted: #636e72;
+    --color-primary: #6c5ce7;
+    --color-primary-hover: #5b4cdb;
+    --color-success: #00b894;
+    --color-error: #d63031;
+    --color-border: #dfe6e9;
+    --color-tile-selected: #74b9ff;
+    --color-tile-correct: #55efc4;
+
+    /* Spacing */
+    --space-xs: 0.25rem;
+    --space-sm: 0.5rem;
+    --space-md: 1rem;
+    --space-lg: 1.5rem;
+    --space-xl: 2rem;
+
+    /* Typography */
+    --font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+    --font-size-sm: 0.875rem;
+    --font-size-base: 1rem;
+    --font-size-lg: 1.25rem;
+    --font-size-xl: 1.5rem;
+    --font-size-2xl: 2rem;
+
+    /* Borders */
+    --border-radius: 8px;
+    --border-radius-lg: 12px;
+
+    /* Shadows */
+    --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+    --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.1);
+    --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.1);
+
+    /* Transitions */
+    --transition-fast: 150ms ease;
+    --transition-base: 250ms ease;
+    --transition-slow: 400ms ease;
+}
+
+/* ========================================
+   Reset & Base Styles
+   ======================================== */
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    font-size: 16px;
+    -webkit-tap-highlight-color: transparent;
+}
+
+body {
+    font-family: var(--font-family);
+    font-size: var(--font-size-base);
+    line-height: 1.5;
+    color: var(--color-text);
+    background-color: var(--color-bg);
+    min-height: 100vh;
+    min-height: 100dvh;
+    overflow-x: hidden;
+}
+
+/* ========================================
+   App Container
+   ======================================== */
+#app {
+    min-height: 100vh;
+    min-height: 100dvh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* ========================================
+   Screen Styles
+   ======================================== */
+.screen {
+    position: fixed;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: var(--space-lg);
+    background-color: var(--color-bg);
+    transition: opacity var(--transition-base), visibility var(--transition-base);
+}
+
+.screen.hidden {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+}
+
+/* ========================================
+   Loading Screen
+   ======================================== */
+.loading-content {
+    text-align: center;
+}
+
+.spinner {
+    width: 48px;
+    height: 48px;
+    border: 3px solid var(--color-border);
+    border-top-color: var(--color-primary);
+    border-radius: 50%;
+    margin: 0 auto var(--space-md);
+    animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* ========================================
+   Error Screen
+   ======================================== */
+.error-content {
+    text-align: center;
+    max-width: 400px;
+}
+
+.error-content h2 {
+    color: var(--color-error);
+    margin-bottom: var(--space-sm);
+}
+
+.error-content p {
+    color: var(--color-text-muted);
+    margin-bottom: var(--space-lg);
+}
+
+/* ========================================
+   Welcome Screen
+   ======================================== */
+.welcome-content {
+    text-align: center;
+    max-width: 400px;
+}
+
+.welcome-content h1 {
+    font-size: var(--font-size-2xl);
+    font-weight: 600;
+    margin-bottom: var(--space-sm);
+    color: var(--color-text);
+}
+
+.welcome-content p {
+    color: var(--color-text-muted);
+    margin-bottom: var(--space-xl);
+}
+
+/* ========================================
+   Game Screen
+   ======================================== */
+#game-screen {
+    justify-content: space-between;
+    padding: var(--space-md);
+}
+
+.game-header {
+    width: 100%;
+    text-align: center;
+    padding: var(--space-sm) 0;
+}
+
+.progress-text {
+    font-size: var(--font-size-sm);
+    color: var(--color-text-muted);
+    font-weight: 500;
+}
+
+.game-main {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.game-footer {
+    width: 100%;
+    text-align: center;
+    padding: var(--space-sm) 0;
+}
+
+.hint-text {
+    font-size: var(--font-size-sm);
+    color: var(--color-text-muted);
+}
+
+/* ========================================
+   Puzzle Container
+   ======================================== */
+.puzzle-container {
+    display: grid;
+    gap: 4px;
+    background-color: var(--color-border);
+    padding: 4px;
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow-md);
+    width: 100%;
+    max-width: min(90vw, 90vh, 500px);
+    aspect-ratio: 1;
+}
+
+/* ========================================
+   Puzzle Tiles
+   ======================================== */
+.puzzle-tile {
+    position: relative;
+    background-color: var(--color-surface);
+    border-radius: 4px;
+    overflow: hidden;
+    cursor: pointer;
+    transition: transform var(--transition-fast), box-shadow var(--transition-fast);
+    -webkit-user-select: none;
+    user-select: none;
+}
+
+.puzzle-tile:active {
+    transform: scale(0.95);
+}
+
+.puzzle-tile.selected {
+    box-shadow: 0 0 0 3px var(--color-tile-selected);
+    z-index: 1;
+}
+
+.puzzle-tile.correct {
+    box-shadow: inset 0 0 0 2px var(--color-tile-correct);
+}
+
+.puzzle-tile canvas {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.puzzle-tile.swapping {
+    animation: tileSwap var(--transition-base);
+}
+
+@keyframes tileSwap {
+    0%, 100% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(0.9);
+    }
+}
+
+/* Locked state after puzzle completion */
+.puzzle-container.locked .puzzle-tile {
+    cursor: default;
+    pointer-events: none;
+}
+
+/* ========================================
+   Completion Screen
+   ======================================== */
+.completion-content {
+    text-align: center;
+    width: 100%;
+    max-width: 500px;
+}
+
+.completed-image-container {
+    margin-bottom: var(--space-lg);
+    border-radius: var(--border-radius-lg);
+    overflow: hidden;
+    box-shadow: var(--shadow-lg);
+}
+
+.completed-image-container img {
+    display: block;
+    width: 100%;
+    height: auto;
+}
+
+.audio-controls {
+    margin-bottom: var(--space-lg);
+}
+
+.completion-actions {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-sm);
+}
+
+/* ========================================
+   Final Screen
+   ======================================== */
+.final-content {
+    text-align: center;
+    max-width: 400px;
+}
+
+.final-content h2 {
+    font-size: var(--font-size-xl);
+    margin-bottom: var(--space-sm);
+}
+
+.final-content p {
+    color: var(--color-text-muted);
+    margin-bottom: var(--space-xl);
+}
+
+/* ========================================
+   Buttons
+   ======================================== */
+.btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-sm);
+    padding: var(--space-md) var(--space-xl);
+    font-family: inherit;
+    font-size: var(--font-size-base);
+    font-weight: 500;
+    color: var(--color-text);
+    background-color: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--border-radius);
+    cursor: pointer;
+    transition: all var(--transition-fast);
+    -webkit-user-select: none;
+    user-select: none;
+}
+
+.btn:hover {
+    background-color: var(--color-bg);
+}
+
+.btn:active {
+    transform: scale(0.98);
+}
+
+.btn-primary {
+    color: white;
+    background-color: var(--color-primary);
+    border-color: var(--color-primary);
+}
+
+.btn-primary:hover {
+    background-color: var(--color-primary-hover);
+    border-color: var(--color-primary-hover);
+}
+
+.btn-icon {
+    font-size: var(--font-size-lg);
+}
+
+/* ========================================
+   Responsive Adjustments
+   ======================================== */
+@media (min-width: 640px) {
+    .screen {
+        padding: var(--space-xl);
+    }
+
+    .welcome-content h1 {
+        font-size: 2.5rem;
+    }
+
+    .puzzle-container {
+        gap: 6px;
+        padding: 6px;
+    }
+}
+
+@media (min-width: 1024px) {
+    .puzzle-container {
+        max-width: 500px;
+    }
+
+    .game-main {
+        max-width: 700px;
+    }
+}
+
+/* ========================================
+   Accessibility
+   ======================================== */
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+}
+
+/* Focus styles for keyboard navigation */
+.btn:focus-visible,
+.puzzle-tile:focus-visible {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 2px;
+}
+
+/* ========================================
+   Dark Mode Support (Optional)
+   ======================================== */
+@media (prefers-color-scheme: dark) {
+    :root {
+        --color-bg: #1a1a2e;
+        --color-surface: #16213e;
+        --color-text: #eaeaea;
+        --color-text-muted: #a0a0a0;
+        --color-border: #2d3a5a;
+        --color-primary: #7c6df0;
+        --color-primary-hover: #6b5ce0;
+    }
+}

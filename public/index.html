@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="description" content="A calming tile-swap puzzle game with audio rewards">
+    <title>Memory Puzzle</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="icon" href="favicon.svg" type="image/svg+xml">
+</head>
+<body>
+    <div id="app">
+        <!-- Loading Screen -->
+        <div id="loading-screen" class="screen">
+            <div class="loading-content">
+                <div class="spinner"></div>
+                <p>Loading...</p>
+            </div>
+        </div>
+
+        <!-- Error Screen -->
+        <div id="error-screen" class="screen hidden">
+            <div class="error-content">
+                <h2>Oops!</h2>
+                <p id="error-message">Something went wrong.</p>
+                <button id="retry-btn" class="btn">Try Again</button>
+            </div>
+        </div>
+
+        <!-- Welcome Screen -->
+        <div id="welcome-screen" class="screen hidden">
+            <div class="welcome-content">
+                <h1>Memory Puzzle</h1>
+                <p>Solve the puzzle to reveal a special message</p>
+                <button id="start-btn" class="btn btn-primary">Begin</button>
+            </div>
+        </div>
+
+        <!-- Game Screen -->
+        <div id="game-screen" class="screen hidden">
+            <header class="game-header">
+                <p id="progress-text" class="progress-text">Memory 1 of 1</p>
+            </header>
+
+            <main class="game-main">
+                <div id="puzzle-container" class="puzzle-container">
+                    <!-- Puzzle tiles will be dynamically inserted here -->
+                </div>
+            </main>
+
+            <footer class="game-footer">
+                <p id="hint-text" class="hint-text">Tap two tiles to swap them</p>
+            </footer>
+        </div>
+
+        <!-- Completion Screen -->
+        <div id="completion-screen" class="screen hidden">
+            <div class="completion-content">
+                <div id="completed-image-container" class="completed-image-container">
+                    <!-- Completed image will be shown here -->
+                </div>
+
+                <div id="audio-controls" class="audio-controls">
+                    <button id="replay-btn" class="btn">
+                        <span class="btn-icon">🔊</span>
+                        Replay Audio
+                    </button>
+                </div>
+
+                <div class="completion-actions">
+                    <button id="next-btn" class="btn btn-primary">Next Memory</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Final Screen -->
+        <div id="final-screen" class="screen hidden">
+            <div class="final-content">
+                <h2>All Memories Complete!</h2>
+                <p>You've unlocked all the memories.</p>
+                <button id="restart-btn" class="btn btn-primary">Start Over</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
